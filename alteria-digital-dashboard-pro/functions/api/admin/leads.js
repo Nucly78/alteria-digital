@@ -1,0 +1,2 @@
+import {hasAdminSession,json} from "../../_lib/admin-auth.js";
+export async function onRequestGet({request,env}){if(!await hasAdminSession(request,env.ADMIN_SESSION_SECRET))return json({error:"Non autorisé."},401);if(!env.DB)return json({error:"Base CRM non configurée : binding D1 DB manquant."},503);const r=await env.DB.prepare("SELECT id,name,company,email,phone,activity,message,status,estimated_value,next_follow_up,next_action,notes,created_at,updated_at FROM leads ORDER BY created_at DESC LIMIT 1000").all();return json({leads:r.results||[]})}

@@ -1,0 +1,31 @@
+ALTÉRIA DIGITAL — TABLEAU DE BORD PRO
+======================================
+
+FONCTIONS
+- Vue d'ensemble : KPI, graphique des 14 derniers jours, répartition des statuts, dernières demandes et relances.
+- Prospects : recherche, filtres, fiche détaillée, statut, valeur commerciale estimée, date de relance, prochaine action et notes internes.
+- Clients : vue dédiée des prospects convertis.
+- Relances : liste des prospects avec date de suivi.
+- Finances : estimation du pipeline, valeur des clients et valeur moyenne.
+- Rapports : taux de conversion et export CSV.
+- Connexion administrateur avec cookie de session signé HttpOnly/Secure/SameSite.
+
+INSTALLATION
+1. Téléverser les fichiers du ZIP dans la racine du dépôt GitHub, en conservant les chemins exacts.
+2. Dans Cloudflare Pages > votre projet > Settings > Bindings, créer un binding D1 nommé DB.
+3. Créer une base D1 (ex. alteria-crm).
+4. Si la table leads n'existe pas encore, exécuter schema.sql dans la console D1.
+5. Si l'ancienne table leads existe déjà (colonnes id/name/company/email/phone/activity/message/status/created_at/updated_at), exécuter migration-existing-db.sql à la place de schema.sql.
+6. Dans les variables/secrets de production Cloudflare, ajouter :
+   ADMIN_PASSWORD = mot de passe unique, long (16 caractères minimum)
+   ADMIN_SESSION_SECRET = secret aléatoire long (32 caractères minimum)
+7. Garder les variables Resend existantes : RESEND_API_KEY, CONTACT_EMAIL, FROM_EMAIL.
+8. Déployer et ouvrir /admin.html.
+
+IMPORTANT
+- Ne placez jamais les secrets dans les fichiers du dépôt ou dans un message.
+- Le tableau de bord n'invente pas de chiffres : il affiche les données de la base.
+- Les données historiques reçues par email avant la mise en place de D1 ne sont pas importées automatiquement.
+- La section finances affiche des montants commerciaux estimés saisis manuellement, pas des encaissements comptables.
+- Le bouton "Ajouter un prospect" renvoie actuellement vers le formulaire public (création manuelle à prévoir en évolution).
+- Tester d'abord sur l'environnement de préproduction si disponible.

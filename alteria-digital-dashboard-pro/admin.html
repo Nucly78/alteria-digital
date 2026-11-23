@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#101820">
+<title>ALTÉRIA DIGITAL — Centre de pilotage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin.css"><script src="/admin.js" defer></script>
+</head><body>
+<section id="login-view" class="login-screen"><form id="login-form" class="login-card">
+<div class="brand"><span class="brand-mark">A<span>.</span></span><span>ALTÉRIA <small>DIGITAL</small></span></div>
+<div class="eyebrow">ESPACE ADMINISTRATEUR SÉCURISÉ</div><h1>Votre activité,<br><em>en un seul endroit.</em></h1>
+<p>Connectez-vous pour accéder à votre centre de pilotage.</p>
+<label for="password">Mot de passe administrateur</label><input id="password" name="password" type="password" autocomplete="current-password" required>
+<button class="btn gold full" type="submit">Accéder au tableau de bord <span>↗</span></button><p id="login-error" class="notice" role="status"></p>
+</form></section>
+
+<div id="app" class="app hidden">
+<aside class="sidebar" id="sidebar">
+<a class="brand side-brand" href="/"><span class="brand-mark">A<span>.</span></span><span>ALTÉRIA <small>DIGITAL</small></span></a>
+<div class="side-caption">ESPACE DE TRAVAIL</div>
+<nav class="side-nav">
+<button class="nav-item active" data-view="overview"><span>◫</span> Vue d'ensemble</button>
+<button class="nav-item" data-view="leads"><span>♧</span> Prospects <b id="nav-leads">0</b></button>
+<button class="nav-item" data-view="clients"><span>◇</span> Clients</button>
+<button class="nav-item" data-view="tasks"><span>☷</span> Relances & tâches</button>
+<button class="nav-item" data-view="finance"><span>€</span> Finances</button>
+</nav>
+<div class="side-caption second">OUTILS</div>
+<nav class="side-nav">
+<button class="nav-item" data-view="reports"><span>▥</span> Rapports</button>
+<a class="nav-item" href="/"><span>↗</span> Voir le site public</a>
+</nav>
+<div class="sidebar-bottom"><div class="admin-avatar">A</div><div><strong>Administrateur</strong><small>ALTÉRIA DIGITAL</small></div><button id="logout" title="Déconnexion">↗</button></div>
+</aside>
+
+<main class="main">
+<header class="topbar"><button id="menu-toggle" class="mobile-menu">☰</button><div><span class="crumb">ALTÉRIA DIGITAL</span><span class="crumb-sep">/</span><strong id="page-name">Vue d'ensemble</strong></div><div class="top-actions"><span class="live-dot"></span><span class="top-date" id="today"></span><button id="refresh" class="icon-btn" title="Actualiser">↻</button></div></header>
+<div class="content">
+<section class="page-view" id="view-overview">
+<div class="page-heading"><div><div class="eyebrow">PILOTAGE DE L'ACTIVITÉ</div><h1>Bonjour, bienvenue <em>chez vous.</em></h1><p>Voici le résumé de votre activité commerciale.</p></div><button class="btn gold" data-action="new-lead">+ Ajouter un prospect</button></div>
+<div class="kpi-grid">
+<article class="kpi"><div class="kpi-top"><span>PROSPECTS</span><span class="kpi-icon">♧</span></div><strong id="kpi-leads">—</strong><small>Total enregistré</small></article>
+<article class="kpi"><div class="kpi-top"><span>À CONTACTER</span><span class="kpi-icon">◷</span></div><strong id="kpi-new">—</strong><small>Nouveaux prospects</small></article>
+<article class="kpi"><div class="kpi-top"><span>CLIENTS</span><span class="kpi-icon">◇</span></div><strong id="kpi-clients">—</strong><small>Statut client</small></article>
+<article class="kpi"><div class="kpi-top"><span>VALEUR DU PIPELINE</span><span class="kpi-icon">€</span></div><strong id="kpi-pipeline">—</strong><small>Montants estimés saisis</small></article>
+</div>
+<div class="overview-grid">
+<article class="panel chart-panel"><div class="panel-head"><div><h2>Acquisition des prospects</h2><p>Demandes reçues sur les 14 derniers jours</p></div><span class="tag">DONNÉES RÉELLES</span></div><div id="lead-chart" class="chart"><p class="empty">Les statistiques apparaîtront avec vos premières demandes.</p></div></article>
+<article class="panel"><div class="panel-head"><div><h2>Répartition commerciale</h2><p>Prospects par statut</p></div></div><div id="status-breakdown" class="breakdown"></div></article>
+</div>
+<div class="overview-grid lower-grid">
+<article class="panel"><div class="panel-head"><div><h2>Dernières demandes</h2><p>Les prospects les plus récents</p></div><button class="text-btn" data-view="leads">Tout voir ↗</button></div><div id="recent-leads" class="recent-list"></div></article>
+<article class="panel"><div class="panel-head"><div><h2>Relances à prévoir</h2><p>Vos prochaines actions commerciales</p></div><button class="text-btn" data-view="tasks">Tout voir ↗</button></div><div id="upcoming-tasks" class="task-list"></div></article>
+</div>
+</section>
+
+<section class="page-view hidden" id="view-leads">
+<div class="page-heading"><div><div class="eyebrow">DÉVELOPPEMENT COMMERCIAL</div><h1>Gestion des <em>prospects.</em></h1><p>Centralisez, qualifiez et transformez vos demandes en clients.</p></div><button class="btn gold" data-action="new-lead">+ Ajouter un prospect</button></div>
+<div class="toolbar"><input id="lead-search" type="search" placeholder="Rechercher nom, email, entreprise…"><select id="lead-status"><option value="">Tous les statuts</option><option value="nouveau">Nouveau</option><option value="contacte">Contacté</option><option value="qualifie">Qualifié</option><option value="client">Client</option><option value="perdu">Perdu</option></select><select id="lead-activity"><option value="">Toutes les activités</option><option value="Couvreur / toiture">Couvreur / toiture</option><option value="Peintre / plaquiste">Peintre / plaquiste</option><option value="Plombier / chauffagiste">Plombier / chauffagiste</option><option value="Électricien">Électricien</option><option value="Rénovation / BTP">Rénovation / BTP</option><option value="Autre activité">Autre activité</option></select><button id="export-csv" class="btn outline">Exporter CSV ↓</button></div>
+<div class="panel table-panel"><div class="table-scroll"><table><thead><tr><th>PROSPECT</th><th>ACTIVITÉ</th><th>DATE</th><th>VALEUR ESTIMÉE</th><th>STATUT</th><th></th></tr></thead><tbody id="lead-rows"></tbody></table></div><div id="lead-count" class="table-foot"></div></div>
+</section>
+
+<section class="page-view hidden" id="view-clients">
+<div class="page-heading"><div><div class="eyebrow">PORTEFEUILLE</div><h1>Vos <em>clients.</em></h1><p>Retrouvez les prospects convertis en clients.</p></div></div>
+<div class="panel table-panel"><div class="table-scroll"><table><thead><tr><th>CLIENT</th><th>ACTIVITÉ</th><th>CONTACT</th><th>VALEUR</th><th>CLIENT DEPUIS</th></tr></thead><tbody id="client-rows"></tbody></table></div></div>
+</section>
+
+<section class="page-view hidden" id="view-tasks">
+<div class="page-heading"><div><div class="eyebrow">SUIVI COMMERCIAL</div><h1>Relances & <em>tâches.</em></h1><p>Ne laissez aucune opportunité sans suivi.</p></div></div>
+<div class="panel table-panel"><div class="table-scroll"><table><thead><tr><th>PROSPECT</th><th>PROCHAINE ACTION</th><th>DATE DE RELANCE</th><th>STATUT</th><th></th></tr></thead><tbody id="task-rows"></tbody></table></div></div>
+</section>
+
+<section class="page-view hidden" id="view-finance">
+<div class="page-heading"><div><div class="eyebrow">SUIVI FINANCIER</div><h1>Vue <em>financière.</em></h1><p>Suivez les montants commerciaux renseignés dans vos fiches prospects.</p></div></div>
+<div class="kpi-grid"><article class="kpi"><div class="kpi-top"><span>PIPELINE TOTAL</span><span class="kpi-icon">€</span></div><strong id="fin-pipeline">—</strong><small>Valeurs estimées de tous les prospects</small></article><article class="kpi"><div class="kpi-top"><span>CLIENTS CONVERTIS</span><span class="kpi-icon">◇</span></div><strong id="fin-won">—</strong><small>Valeur estimée des clients</small></article><article class="kpi"><div class="kpi-top"><span>OPPORTUNITÉS OUVERTES</span><span class="kpi-icon">◷</span></div><strong id="fin-open">—</strong><small>Hors clients et perdus</small></article><article class="kpi"><div class="kpi-top"><span>VALEUR MOYENNE</span><span class="kpi-icon">∅</span></div><strong id="fin-average">—</strong><small>Par prospect renseigné</small></article></div>
+<div class="panel finance-note"><h2>Important</h2><p>Ces chiffres sont des estimations commerciales saisies dans les fiches prospects. Ils ne représentent pas votre chiffre d'affaires comptable, les factures émises ou les encaissements. Aucun paiement n'est enregistré dans ce tableau de bord.</p></div>
+</section>
+
+<section class="page-view hidden" id="view-reports">
+<div class="page-heading"><div><div class="eyebrow">ANALYSE</div><h1>Rapports <em>d'activité.</em></h1><p>Une synthèse de vos données commerciales enregistrées.</p></div><button class="btn outline" id="report-export">Télécharger le rapport CSV ↓</button></div>
+<div class="kpi-grid"><article class="kpi"><div class="kpi-top"><span>TAUX DE CONVERSION</span><span class="kpi-icon">%</span></div><strong id="report-conversion">—</strong><small>Clients / prospects</small></article><article class="kpi"><div class="kpi-top"><span>PROSPECTS PERDUS</span><span class="kpi-icon">↘</span></div><strong id="report-lost">—</strong><small>Statut perdu</small></article><article class="kpi"><div class="kpi-top"><span>PROSPECTS QUALIFIÉS</span><span class="kpi-icon">✓</span></div><strong id="report-qualified">—</strong><small>Statut qualifié</small></article><article class="kpi"><div class="kpi-top"><span>DONNÉES DISPONIBLES</span><span class="kpi-icon">▤</span></div><strong id="report-total">—</strong><small>Fiches enregistrées</small></article></div>
+<div class="panel finance-note"><h2>Votre activité en un coup d'œil</h2><p id="report-summary">Les indicateurs seront calculés à partir des prospects réellement enregistrés.</p></div>
+</section>
+</div>
+</main></div>
+
+<div id="lead-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-card"><div class="modal-head"><div><div class="eyebrow">FICHE COMMERCIALE</div><h2 id="modal-title">Détail du prospect</h2></div><button id="close-modal" class="icon-btn">×</button></div><div id="lead-detail"></div></div></div>
+<div id="toast" class="toast" role="status"></div>
+</body></html>
